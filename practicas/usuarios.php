@@ -1,5 +1,9 @@
 <?php
     $FH = fopen('../DB/usuarios.csv', 'r');
+    if(!$FH){
+        echo "No hay archivo :( ";
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
