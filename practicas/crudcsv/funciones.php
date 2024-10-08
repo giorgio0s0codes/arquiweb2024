@@ -30,7 +30,7 @@ function getUsuarios(){
 }
 
 function getUsuario($usrsrch){
-	$usrsrch = getUsuarios();
+	$usuarios = getUsuarios();
 	/*
     foreach ($usuario as $usarios) {
         if ($usrsrch== $usuario["usuario"]) {
@@ -39,10 +39,24 @@ function getUsuario($usrsrch){
     }
 	*/
 
-	array_filter($usuarios, function($usuario) use($usrsrch){
+	/*
+	$usuario = array_filter($usuarios, function($usuario) use($usrsrch){
 		return $usuario["usuario"] == $usrsrch;
 	});
-	return null;
+	return $usuario;
+*/
+	// Use array_filter to find the user, but reset the indices
+    $usuario = array_filter($usuarios, function($usuario) use($usrsrch) {
+        return $usuario["usuario"] == $usrsrch;
+    });
+
+    // If the user is found, reset the array and return the first element
+    if (!empty($usuario)) {
+        $usuario = array_values($usuario);  // Reset the array indices
+        return $usuario[0];  // Return the first (and only) user found
+    }
+
+    return null;  // Return null if no user is found
 
 }
 
@@ -54,7 +68,7 @@ if(isset($_GET["prueba"]) && isset($_GET["method"]) && $_GET["method"] == "getUs
 	
 }
 
-if(isset($_GET["prueba"]) && isset($_GET["method"]) && $_GET["usr"] && $_GET["method"] == "getUsuarios"){
+if(isset($_GET["prueba"]) && isset($_GET["method"]) && $_GET["usr"] && $_GET["method"] == "getUsuario"){
 	//Probar el método getUsuarios:
 	
 	echo "probando getUSuario";
