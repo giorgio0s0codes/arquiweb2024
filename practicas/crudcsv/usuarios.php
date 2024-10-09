@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>How to Store Form data in CSV File using PHP</title>
+    <title>How to Store Form Data in CSV File using PHP</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,15 +44,27 @@
         .form-group input[type="submit"]:hover {
             background-color: #138496;
         }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>How to Store Form data in CSV File using PHP</h2>
+        <h2>How to Store Form Data in CSV File using PHP</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="post" action="usuarioCNT.php">
                 <h3>Contact Form</h3>
-                <?php echo $error; ?>
+                <?php if (!empty($error)) echo "<p>$error</p>"; ?>
                 <div class="form-group">
                     <label>Usuario</label>
                     <input type="text" name="usuario" placeholder="Enter Usuario" value="<?php echo $usuario; ?>" />
@@ -71,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     <label>Mail</label>
-                    <input type="text" name="mail" placeholder="Enter Apellido Materno" value="<?php echo $apellido_materno; ?>" />
+                    <input type="email" name="mail" placeholder="Enter Mail" value="<?php echo $mail; ?>" />
                 </div>
                 <div class="form-group">
                     <label>Choose a Number</label>
@@ -86,6 +98,24 @@
                 </div>
             </form>
         </div>
+
+        <?php
+        // Display user data if available
+        $file = fopen('user_data.csv', 'r');
+        if ($file) {
+            echo "<table>";
+            echo "<tr><th>Usuario</th><th>Nombre</th><th>Apellido Paterno</th><th>Apellido Materno</th><th>Mail</th><th>Número Elegido</th></tr>";
+            while (($line = fgetcsv($file)) !== FALSE) {
+                echo "<tr>";
+                foreach ($line as $cell) {
+                    echo "<td>" . htmlspecialchars($cell) . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+            fclose($file);
+        }
+        ?>
     </div>
 </body>
 </html>

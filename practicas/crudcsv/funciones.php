@@ -7,10 +7,11 @@ function insertarUsuario($usuario){
 
 function getUsuarios(){
 	//Retorna arreglo de arreglos asociativos
-	$file_handle = fopen("../DB/usuarios.csv","r");
-	$data = fread($file_handle, filesize('../DB/usuarios.csv'));
+	$file_handle = fopen("./DB/usuarios.csv","r");
+	$data = fread($file_handle, filesize('./DB/usuarios.csv'));
 	fclose($file_handle);
 	$lineas = explode("\n",$data);
+	var_dump($lineas);
 	$users = array();
 	foreach($lineas as $linea){
 		$values = explode(",", $linea);
