@@ -1,8 +1,30 @@
 <?php
 
+function borrarUsuarios(){
+	
+}
+
 
 function insertarUsuario($usuario){
+	$usuarios = getUsuarios();
+	array_push($usuarios,$usuario);
+	guardarUsuarios($usuarios);
+}
 
+function guardarUsuarios($usuarios, $test = 0){
+	$archivo = "./DB/usuarios.csv";
+	if($test==1){
+		$archivo = "./DB/usuarios_test.csv";
+	}
+	$data = "";
+	foreach($usuarios as $usuario){
+		$data .= implode(",",$usuario)."\n";
+	}
+	$data=substr($data,0,-1);
+	$file_handle = fopen($archivo,"w");
+
+	fwrite($file_handle,$data);
+	fclose($file_handle);
 }
 
 function getUsuarios(){
@@ -74,5 +96,24 @@ if(isset($_GET["prueba"]) && isset($_GET["method"]) && $_GET["usr"] && $_GET["me
 	
 	echo "probando getUSuario";
 	var_dump(getUsuario($_GET["usr"]));
+	
+}
+
+if(isset($_GET["prueba"]) && isset($_GET["method"]) && $_GET["method"] == "guardarUsuarios"){
+	//Probar el método getUsuarios:
+	
+	echo "probando guardarUsuarios";
+	$usuarios = array(
+		array("usuario" => "asland12",
+				"nombre" => "Franz",
+				"apellidoP" => "Ferdinand",
+				"apellidoM" => "Farió",
+				"correo" => "fff@gmail.com",
+				"password" => "1234",
+				"plan" => "2")
+
+	);
+	guardarUsuarios($usuarios, 1); 
+	echo "archivo creado";
 	
 }

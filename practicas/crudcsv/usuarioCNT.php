@@ -24,9 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Clear form data
         $usuario = $nombre = $apellido_paterno = $apellido_materno = $mail = $password = "";
+
     }
 }
 
 // Display form and user data
-include 'form_view.php';
+include 'usuarios.php';
 ?>
