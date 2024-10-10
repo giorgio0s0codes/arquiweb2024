@@ -1,8 +1,13 @@
 <?php
 
 function borrarUsuarios(){
-	
+
 }
+
+function editarUsuarios(){
+
+}
+
 
 
 function insertarUsuario($usuario){
