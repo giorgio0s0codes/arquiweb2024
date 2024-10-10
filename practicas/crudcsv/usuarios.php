@@ -86,6 +86,10 @@
                     <input type="email" name="mail" placeholder="Enter Mail" value="<?php echo $mail; ?>" />
                 </div>
                 <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="Enter Contraseña" />
+                </div>
+                <div class="form-group">
                     <label>Choose a Number</label>
                     <select name="number_choice">
                         <option value="1">1</option>
@@ -101,10 +105,10 @@
 
         <?php
         // Display user data if available
-        $file = fopen('user_data.csv', 'r');
+        $file = fopen('./DB/usuarios.csv', 'r');
         if ($file) {
             echo "<table>";
-            echo "<tr><th>Usuario</th><th>Nombre</th><th>Apellido Paterno</th><th>Apellido Materno</th><th>Mail</th><th>Número Elegido</th></tr>";
+            echo "<tr><th>Usuario</th><th>Nombre</th><th>Apellido Paterno</th><th>Apellido Materno</th><th>Mail</th><th>Contraseña</th><th>Plan</th></tr>";
             while (($line = fgetcsv($file)) !== FALSE) {
                 echo "<tr>";
                 foreach ($line as $cell) {
