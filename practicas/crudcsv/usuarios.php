@@ -10,7 +10,7 @@
             padding: 0;
         }
         .container {
-            width: 60%;
+            width: 65%;
             margin: 50px auto;
             background-color: #fff;
             padding: 20px;
@@ -83,6 +83,28 @@
             background-color: #c82333;
         }
     </style>
+        <script>
+        function editUser(usuario, nombre, apellidoP, apellidoM, correo, password, plan) {
+            // Populate the form with the selected user's data
+            document.getElementById('usuario').value = usuario;
+            document.getElementById('nombre').value = nombre;
+            document.getElementById('apellido_paterno').value = apellidoP;
+            document.getElementById('apellido_materno').value = apellidoM;
+            document.getElementById('mail').value = correo;
+            document.getElementById('password').value = password;
+            document.getElementById('number_choice').value = plan;
+            document.getElementById('action').value = 'edit'; // Set form action to edit
+        }
+
+        function deleteUser(usuario) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                // Set form action to delete and submit
+                document.getElementById('usuario').value = usuario;
+                document.getElementById('action').value = 'delete';
+                document.forms['userForm'].submit();
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
