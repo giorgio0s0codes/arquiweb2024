@@ -1,3 +1,22 @@
+<?php
+include "funciones.php";
+
+$usuarios = getUsuarios();
+
+if(isset($_GET['user'])){
+    $usuario = getUsuario($_GET['user']);
+}
+else{
+    $usuario = array("usuario" => "",
+                        "nombre"     => "",
+                        "apellidoP"  => "",
+                        "apellidoM"  => "",
+                        "correo"     => "",
+                        "password"   => "",
+                        "plan"       => 0);
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,59 +102,43 @@
             background-color: #c82333;
         }
     </style>
-        <script>
-        function editUser(usuario, nombre, apellidoP, apellidoM, correo, password, plan) {
-            // Populate the form with the selected user's data
-            document.getElementById('usuario').value = usuario;
-            document.getElementById('nombre').value = nombre;
-            document.getElementById('apellido_paterno').value = apellidoP;
-            document.getElementById('apellido_materno').value = apellidoM;
-            document.getElementById('mail').value = correo;
-            document.getElementById('password').value = password;
-            document.getElementById('number_choice').value = plan;
-            document.getElementById('action').value = 'edit'; // Set form action to edit
-        }
-
-        function deleteUser(usuario) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                // Set form action to delete and submit
-                document.getElementById('usuario').value = usuario;
-                document.getElementById('action').value = 'delete';
-                document.forms['userForm'].submit();
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <h2>User Registry</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="post" action="usuarioCNT.php">
+                <?php if(isset($_GET['edit'])){?>
+                    <input type="hidden" name = "edit" value="update">
+                <?php }?>
+                <?php if(isset($_GET['delete'])){?>
+                    <input type="hidden" name = "delete" value="update">
+                <?php }?>
                 <h3>User Info</h3>
                 <?php if (!empty($error)) echo "<p>$error</p>"; ?>
                 <div class="form-group">
                     <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Enter Usuario" value="<?php echo $usuario; ?>" />
+                    <input type="text" id="usuario" name="usuario" placeholder="Enter Usuario" value="<?= $usuario["usuario"]?>" />
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Enter Nombre" value="<?php echo $nombre; ?>" />
+                    <input type="text" id="nombre" name="nombre" placeholder="Enter Nombre" value="<?= $usuario["nombre"] ?>" />
                 </div>
                 <div class="form-group">
                     <label for="apellido_paterno">Apellido Paterno</label>
-                    <input type="text" id="apellido_paterno" name="apellido_paterno" placeholder="Enter Apellido Paterno" value="<?php echo $apellido_paterno; ?>" />
+                    <input type="text" id="apellido_paterno" name="apellido_paterno" placeholder="Enter Apellido Paterno" value="<?= $usuario["apellidoP"] ?>" />
                 </div>
                 <div class="form-group">
                     <label for="apellido_materno">Apellido Materno</label>
-                    <input type="text" id="apellido_materno" name="apellido_materno" placeholder="Enter Apellido Materno" value="<?php echo $apellido_materno; ?>" />
+                    <input type="text" id="apellido_materno" name="apellido_materno" placeholder="Enter Apellido Materno" value="<?= $usuario["apellidoM"]; ?>" />
                 </div>
                 <div class="form-group">
                     <label for="mail">Mail</label>
-                    <input type="email" id="mail" name="mail" placeholder="Enter Mail" value="<?php echo $mail; ?>" />
+                    <input type="email" id="mail" name="mail" placeholder="Enter Mail" value="<?= $usuario["correo"] ?>" />
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" placeholder="Enter Contraseña" value="<?php echo $mail; ?>"/>
+                    <input type="password" id="password" name="password" placeholder="Enter Contraseña" value="<?= $usuario["password"] ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="number_choice">Choose a Number</label>
@@ -151,27 +154,32 @@
             </form>
         </div>
 
-        <?php
-        // Display user data if available
-        $file = fopen('./DB/usuarios.csv', 'r');
-        if ($file) {
-            echo "<table>";
-            echo "<tr><th>Usuario</th><th>Nombre</th><th>Apellido Paterno</th><th>Apellido Materno</th><th>Mail</th><th>Contraseña</th><th>Plan</th><th>Acciones</th></tr>";
-            while (($line = fgetcsv($file)) !== FALSE) {
-                echo "<tr>";
-                foreach ($line as $cell) {
-                    echo "<td>" . htmlspecialchars($cell) . "</td>";
-                }
-                echo "<td class='action-buttons'>";
-                echo "<button class='edit-button'>Editar</button>";
-                echo "<button class='delete-button'>Borrar</button>";
-                echo "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-            fclose($file);
-        }
-        ?>
+        <table>
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>ApellidoP</th>
+                <th>ApellidoM</th>
+                <th>Correo</th>
+                <th>Plan</th>
+                <th>Acciones</th>
+            </tr>
+            <?php foreach($usuarios as $usr){?>
+                <tr>
+                    <td><?= $usr["usuario"]?></td>
+                    <td><?= $usr["nombre"]?></td>
+                    <td><?= $usr["apellidoP"]?></td>
+                    <td><?= $usr["apellidoM"]?></td>
+                    <td><?= $usr["correo"]?></td>
+                    <td><?= $usr["password"]?></td>
+                    <td><?= $usr["plan"]?></td>
+                    <td>
+                        <a href='usuarios.php?user=<?=urlencode($usr["usuario"])?>&action=edit' class='edit-button'>Editar</a>
+                        <a href='usuariosCNT.php?user=<?=urlencode($usr["usuario"])?>&action=delete' class='delete-button'>Borrar</a>
+                    </td>
+                </tr>
+            <?php }?>
+        </table>
     </div>
 </body>
 </html>
