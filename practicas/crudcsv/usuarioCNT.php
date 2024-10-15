@@ -1,20 +1,37 @@
 <?php
+echo "1ntro";
+include "funciones.php";
 // Initialize variables
 $usuario = $nombre = $apellido_paterno = $apellido_materno = $mail = $password = "";
 $error = "";
 
 // Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "2ntro";
     // Check if this is an edit or delete request
-    if (isset($_POST['edit']) && $_POST['edit'] == 'update') {
+    if (isset($_POST['edit'])) {
+        echo "probando editarUsuario";
         // Edit user logic
-        editarUsuario($_POST['usuario'], $_POST['nombre'], $_POST['apellido_paterno'], $_POST['apellido_materno'], $_POST['mail'], $_POST['password'], $_POST['number_choice']);
-    
-    } elseif (isset($_POST['delete']) && $_POST['delete'] == 'update') {
+        // Try to make it receive it as an asociative array, it looks like this editarUsuario($usrsrch, $newData)
+        $newData = [
+            "nombre" => $_POST['nombre'],
+            "apellidoP" => $_POST['apellido_paterno'],
+            "apellidoM" => $_POST['apellido_materno'],
+            "correo" => $_POST['mail'],
+            "password" => $_POST['password'],
+            "plan" => $_POST['number_choice'] // Assuming this is the field you want to map to "plan"
+        ];
+
+        // Call the editarUsuario function, passing the user's username (to search) and the new data
+        editarUsuario($_POST['usuario'], $newData);
+
+    } elseif (isset($_POST['delete'])) {
+        echo "probando borrarUsuario";
         // Delete user logic
         borrarUsuario($_POST['usuario']);
     
     } else {
+        echo "trató de registrar usuario";
         // Add new user logic (when neither edit nor delete is set)
         $usuario = $_POST['usuario'];
         $nombre = $_POST['nombre'];

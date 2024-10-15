@@ -108,11 +108,9 @@ else{
         <h2>User Registry</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="post" action="usuarioCNT.php">
-                <?php if(isset($_GET['edit'])){?>
+                <?php var_dump($_GET);?>
+                <?php if(isset($_GET['action'])&& $_GET['action']== 'edit'){?>
                     <input type="hidden" name = "edit" value="update">
-                <?php }?>
-                <?php if(isset($_GET['delete'])){?>
-                    <input type="hidden" name = "delete" value="update">
                 <?php }?>
                 <h3>User Info</h3>
                 <?php if (!empty($error)) echo "<p>$error</p>"; ?>
@@ -175,7 +173,7 @@ else{
                     <td><?= $usr["plan"]?></td>
                     <td>
                         <a href='usuarios.php?user=<?=urlencode($usr["usuario"])?>&action=edit' class='edit-button'>Editar</a>
-                        <a href='usuariosCNT.php?user=<?=urlencode($usr["usuario"])?>&action=delete' class='delete-button'>Borrar</a>
+                        <a href='usuarioCNT.php?user=<?=urlencode($usr["usuario"])?>&action=delete' class='delete-button'>Borrar</a>
                     </td>
                 </tr>
             <?php }?>
