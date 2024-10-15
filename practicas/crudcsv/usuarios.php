@@ -107,7 +107,7 @@ else{
     <div class="container">
         <h2>User Registry</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
-            <form method="post" action="usuarioCNT.php">
+            <form method="POST" action="usuarioCNT.php">
                 <?php var_dump($_GET);?>
                 <?php if(isset($_GET['action'])&& $_GET['action']== 'edit'){?>
                     <input type="hidden" name = "edit" value="update">

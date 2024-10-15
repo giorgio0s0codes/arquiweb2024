@@ -1,5 +1,4 @@
 <?php
-echo "1ntro";
 include "funciones.php";
 // Initialize variables
 $usuario = $nombre = $apellido_paterno = $apellido_materno = $mail = $password = "";
@@ -7,10 +6,8 @@ $error = "";
 
 // Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "2ntro";
     // Check if this is an edit or delete request
     if (isset($_POST['edit'])) {
-        echo "probando editarUsuario";
         // Edit user logic
         // Try to make it receive it as an asociative array, it looks like this editarUsuario($usrsrch, $newData)
         $newData = [
@@ -24,14 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Call the editarUsuario function, passing the user's username (to search) and the new data
         editarUsuario($_POST['usuario'], $newData);
-
-    } elseif (isset($_POST['delete'])) {
-        echo "probando borrarUsuario";
-        // Delete user logic
-        borrarUsuario($_POST['usuario']);
-    
-    } else {
-        echo "trató de registrar usuario";
+    } 
+    else {
         // Add new user logic (when neither edit nor delete is set)
         $usuario = $_POST['usuario'];
         $nombre = $_POST['nombre'];
@@ -55,6 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+    else{
+     if(isset($_GET['action'])) {
+        // Delete user logic
+        borrarUsuario($_GET['user']);
+     }
+}
+header('Location: usuarios.php');
 
 // Display form and user data
 include 'usuarios.php';
