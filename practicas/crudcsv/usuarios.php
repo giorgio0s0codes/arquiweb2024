@@ -1,5 +1,8 @@
 <?php
 include "funciones.php";
+include "funcionesplanes.php";
+
+$planes = getPlanes();
 
 $usuarios = getUsuarios();
 
@@ -108,7 +111,6 @@ else{
         <h2>User Registry</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="POST" action="usuarioCNT.php">
-                <?php var_dump($_GET);?>
                 <?php if(isset($_GET['action'])&& $_GET['action']== 'edit'){?>
                     <input type="hidden" name = "edit" value="update">
                 <?php }?>
@@ -141,9 +143,9 @@ else{
                 <div class="form-group">
                     <label for="number_choice">Choose a Number</label>
                     <select id="number_choice" name="number_choice">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <?php foreach($planes as $plan){ ?>
+                        <option value="<?=$plan["id"]?>"><?=$plan["nombre"]?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="form-group" align="center">
