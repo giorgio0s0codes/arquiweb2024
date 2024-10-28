@@ -1,0 +1,28 @@
+/****** Estilos base *******/
+
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+p {
+    border: 1px solid green;
+    background-color: red;
+    width: 90%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Helvetica;
+    color: white;
+}
+
+.row {
+    width: 100%;
+}
+
+@media(min-width: 1200px){
+    
+}
