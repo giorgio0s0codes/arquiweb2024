@@ -1,0 +1,11 @@
+#encabezado, #navegacion, #contenido{
+    border: 1px solid blue;
+}
+
+#encabezado{
+    height: 20vh;
+}
+
+#principal{
+    min-height: 80vh;
+}
