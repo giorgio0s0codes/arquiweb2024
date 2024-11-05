@@ -52,8 +52,6 @@
                                     <th scope="col">Realizadas</th>
                                 </tr>
                                 <tr>
-                                    <td>Avanzar proyecto</td>
-                                    <td><input type="checkbox" name="chktarea"></td>
                                 </tr>
                             </table>
                         </div>
@@ -61,12 +59,12 @@
 
                     <form class="row mt-5">
                         <div class="col-8">
-                            <table class="table table-striped table-bordered">
+                            <table id="realizadasTable" class="table table-striped table-bordered">
                                 <tr>
                                     <th scope="col">Tareas Realizadas</th>
                                 </tr>
                                 <tr class="table-info">
-                                    <td>Creación base de datos</td>
+                                    <td>Ese es el camino de la tortuga hermitaña:</td>
                                 </tr>
                             </table>
                         </div>
