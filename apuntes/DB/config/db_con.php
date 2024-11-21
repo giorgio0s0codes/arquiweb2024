@@ -3,10 +3,10 @@
 /*DSN Data Source Name <manejador>:host=<ip o nombre host>;dbname=<base de datos>;
                                    charset=<charset>*/
 
-$dsn		= "mysql:host=localhost;dbname=arqwebo24;charset=utf8mb4";
+$dsn		= "mysql:host=localhost;dbname=arqwebo2024;charset=utf8mb4";
 
-$usuario 	= "arqwebo24";
-$password	= "37863";
+$usuario 	= "arqwebo2024";
+$password	= "210681";
 
 $options	= array(
 				PDO::ATTR_ERRMODE				=> PDO::ERRMODE_EXCEPTION,
