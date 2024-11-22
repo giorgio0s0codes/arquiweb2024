@@ -13,7 +13,7 @@
      //Consultas con parámetros;
      try{
         $result = $CNX->query("SELECT       id_categoria,
-                                            descripcion
+                                            description
                                 FROM        categorias");
 
         $categorias = $result->fetchAll();
