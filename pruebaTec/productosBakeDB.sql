@@ -13,7 +13,7 @@ CREATE TABLE articulos (
     name VARCHAR(50) NOT NULL,
     precio DECIMAL(15,2),
     descripcion VARCHAR(200) NOT NULL,
-    id_categoria VARCHAR(50),
+    id_categoria INT,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
