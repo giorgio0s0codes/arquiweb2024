@@ -147,7 +147,6 @@ try {
                 </div>
             </form>
         </div>
-        
         <?php if (isset($_GET['message'])): ?>
             <p style="color: green;"><?= htmlspecialchars($_GET['message']) ?></p>
         <?php endif; ?>
@@ -155,7 +154,7 @@ try {
         <?php if (isset($_GET['error'])): ?>
             <p style="color: red;"><?= htmlspecialchars($_GET['error']) ?></p>
         <?php endif; ?>
-
+        
         <!-- Product List Table -->
         <h3>Product List</h3>
         <table>

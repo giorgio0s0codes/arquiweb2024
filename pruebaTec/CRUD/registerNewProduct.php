@@ -39,7 +39,7 @@ try {
     ]);
 
     // Redirect to siteBake.php after successful insertion
-    header('Location: ./siteBake.php');
+    header('Location: ../siteBake.php');
     exit(); // Ensure no further processing happens
 } catch (Exception $e) {
     // Handle database errors
