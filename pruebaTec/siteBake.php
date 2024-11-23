@@ -147,6 +147,14 @@ try {
                 </div>
             </form>
         </div>
+        
+        <?php if (isset($_GET['message'])): ?>
+            <p style="color: green;"><?= htmlspecialchars($_GET['message']) ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($_GET['error'])): ?>
+            <p style="color: red;"><?= htmlspecialchars($_GET['error']) ?></p>
+        <?php endif; ?>
 
         <!-- Product List Table -->
         <h3>Product List</h3>
@@ -168,10 +176,10 @@ try {
                         <td><?= htmlspecialchars($product['descripcion']) ?></td>
                         <td><?= htmlspecialchars($product['id_categoria']) ?></td>
                         <td>
-                            <div class="action-buttons">
-                                <a href="./CRUD/editProduct.php?id=<?= urlencode($product['id_articulo']) ?>" class="edit-button">Edit</a>
-                                <a href="./CRUD/deleteProduct.php?id=<?= urlencode($product['id_articulo']) ?>" class="delete-button">Delete</a>
-                            </div>
+                            <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -182,5 +190,13 @@ try {
             <?php endif; ?>
         </table>
     </div>
+    <script>
+        function confirmDelete(event, form) {
+            event.preventDefault(); // Prevent the form from submitting immediately
+            if (confirm('Are you sure you want to delete this product?')) {
+                form.submit(); // Submit the form if confirmed
+            }
+        }
+    </script>
 </body>
 </html>
