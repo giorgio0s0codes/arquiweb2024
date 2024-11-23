@@ -49,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
+<!-- Copy of the main site structure -->
 <!DOCTYPE html>
 <html>
 <head>
