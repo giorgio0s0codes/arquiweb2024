@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,19 +89,29 @@
         <h2>Product Registry</h2>
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="POST" action="./CRUD/registerNewProduct.php">
-                <h3>Plan Info</h3>
+                <h3>Product Info</h3>
                 <?php if (!empty($error)) echo "<p>$error</p>"; ?>
                 <div class="form-group">
                     <label for="nombre">Name</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Enter Nombre" value="" />
+                    <input type="text" id="nombre" name="nombre" placeholder="Enter Name" value="" required />
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="int" id="price" name="price" placeholder="Enter Price" value="" />
+                    <input type="number" id="price" name="price" placeholder="Enter Price" value="" required />
                 </div>
                 <div class="form-group">
-                    <label for="Description">Description</label>
-                    <input type="description" id="description" name="description" placeholder="Enter Description" value="" />
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" placeholder="Enter Description" value="" required />
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="1">Bread</option>
+                        <option value="2">Pastries</option>
+                        <option value="3">Cakes</option>
+                        <option value="4">Cookies</option>
+                        <option value="5">Drinks</option>
+                    </select>
                 </div>
                 <div class="form-group" align="center">
                     <input type="submit" name="submit" value="Submit" />
