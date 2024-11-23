@@ -1,31 +1,57 @@
 <?php
-// URL to the API endpoint
+// URL to the API endpoints
 $apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/pruebaTec/CRUD/readAll.php';
+$searchApiUrl = 'http://52.15.244.98/www.giorgio-oso.com/pruebaTec/CRUD/searchByName.php';
+
 $products = [];
+$searchResult = null;
 
 try {
-    // Fetch data from the API
+    // Fetch all products from the API
     $response = file_get_contents($apiUrl);
 
-    // Check if the response is false
     if ($response === false) {
         throw new Exception('Failed to fetch data from the API.');
     }
 
-    // Decode the JSON response into a PHP array
     $products = json_decode($response, true);
 
-    // Check if decoding was successful
     if ($products === null) {
         throw new Exception('Failed to decode JSON.');
     }
 } catch (Exception $e) {
     echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
 }
+
+// Handle search query
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
+    $searchQuery = trim($_POST['search']);
+    if (!empty($searchQuery)) {
+        try {
+            // Use cURL to make a POST request to the search API
+            $ch = curl_init($searchApiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['name' => $searchQuery]);
+
+            $searchResponse = curl_exec($ch);
+            curl_close($ch);
+
+            if ($searchResponse === false) {
+                throw new Exception('Failed to fetch search results from the API.');
+            }
+
+            $searchResult = json_decode($searchResponse, true);
+
+            if ($searchResult === null) {
+                throw new Exception('Failed to decode JSON from search.');
+            }
+        } catch (Exception $e) {
+            echo "<p>Error searching product: " . htmlspecialchars($e->getMessage()) . "</p>";
+        }
+    }
+}
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -55,16 +81,13 @@ try {
             display: block;
             margin-bottom: 5px;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input, .form-group select {
             width: 80%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             display: block;
             margin: 0 auto;
-        }
-        .form-group textarea {
-            resize: vertical;
         }
         .form-group input[type="submit"] {
             background-color: #17a2b8;
@@ -116,21 +139,22 @@ try {
 <body>
     <div class="container">
         <h2>Product Registry</h2>
+
+        <!-- Product Registration Form -->
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="POST" action="./CRUD/registerNewProduct.php">
-                <h3>Product Info</h3>
-                <?php if (!empty($error)) echo "<p>$error</p>"; ?>
+                <h3>Register a New Product</h3>
                 <div class="form-group">
                     <label for="nombre">Name</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Enter Name" value="" required />
+                    <input type="text" id="nombre" name="nombre" placeholder="Enter Name" required />
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" id="price" name="price" placeholder="Enter Price" value="" required />
+                    <input type="number" id="price" name="price" placeholder="Enter Price" required />
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" id="description" name="description" placeholder="Enter Description" value="" required />
+                    <input type="text" id="description" name="description" placeholder="Enter Description" required />
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
@@ -143,19 +167,39 @@ try {
                     </select>
                 </div>
                 <div class="form-group" align="center">
-                    <input type="submit" name="submit" value="Submit" />
+                    <input type="submit" value="Submit" />
                 </div>
             </form>
         </div>
-        <?php if (isset($_GET['message'])): ?>
-            <p style="color: green;"><?= htmlspecialchars($_GET['message']) ?></p>
+
+        <!-- Search Bar -->
+        <form method="POST" class="form-group">
+            <input type="text" name="search" placeholder="Search for a product by name" required />
+            <input type="submit" value="Search" />
+        </form>
+
+        <!-- Search Result -->
+        <?php if ($searchResult): ?>
+            <h3>Search Result</h3>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                </tr>
+                <tr>
+                    <td><?= htmlspecialchars($searchResult['id_articulo']) ?></td>
+                    <td><?= htmlspecialchars($searchResult['name']) ?></td>
+                    <td><?= htmlspecialchars($searchResult['precio']) ?></td>
+                    <td><?= htmlspecialchars($searchResult['descripcion']) ?></td>
+                    <td><?= htmlspecialchars($searchResult['id_categoria']) ?></td>
+                </tr>
+            </table>
         <?php endif; ?>
 
-        <?php if (isset($_GET['error'])): ?>
-            <p style="color: red;"><?= htmlspecialchars($_GET['error']) ?></p>
-        <?php endif; ?>
-        
-        <!-- Product List Table -->
+        <!-- Product List -->
         <h3>Product List</h3>
         <table>
             <tr>
@@ -166,29 +210,24 @@ try {
                 <th>Category</th>
                 <th>Actions</th>
             </tr>
-            <?php if (!empty($products)): ?>
-                <?php foreach ($products as $product): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($product['id_articulo']) ?></td>
-                        <td><?= htmlspecialchars($product['name']) ?></td>
-                        <td><?= htmlspecialchars($product['precio']) ?></td>
-                        <td><?= htmlspecialchars($product['descripcion']) ?></td>
-                        <td><?= htmlspecialchars($product['id_categoria']) ?></td>
-                        <td>
-                            <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
-                                <button type="submit" class="delete-button">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+            <?php foreach ($products as $product): ?>
                 <tr>
-                    <td colspan="6" style="text-align: center;">No products found</td>
+                    <td><?= htmlspecialchars($product['id_articulo']) ?></td>
+                    <td><?= htmlspecialchars($product['name']) ?></td>
+                    <td><?= htmlspecialchars($product['precio']) ?></td>
+                    <td><?= htmlspecialchars($product['descripcion']) ?></td>
+                    <td><?= htmlspecialchars($product['id_categoria']) ?></td>
+                    <td>
+                        <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </td>
                 </tr>
-            <?php endif; ?>
+            <?php endforeach; ?>
         </table>
     </div>
+
     <script>
         function confirmDelete(event, form) {
             event.preventDefault(); // Prevent the form from submitting immediately
