@@ -1,13 +1,17 @@
+-- Erase data base if already exists to avoid handling errors then Create it
 drop DATABASE if exists productosBake;
 CREATE DATABASE productosBake;
 
+-- Take the DB to work with
 USE productosBake;
 
+-- Create the table categories to work with
 CREATE TABLE categorias (
     id_categoria INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     description VARCHAR(35) NOT NULL
 );
 
+-- Create the table for the articles to be entered
 CREATE TABLE articulos (
     id_articulo INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
@@ -17,9 +21,11 @@ CREATE TABLE articulos (
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
+-- Categories are asigned using the auto increment
 INSERT INTO categorias (description) VALUES 
 ('Bread'), ('Pastries'), ('Cakes'), ('Cookies'), ('Drinks');
 
+-- Inserting the articles for the DB
 INSERT INTO articulos (name, precio, descripcion, id_categoria) VALUES
 ('Baguette', 50.00, 'Traditional French bread with a crispy crust.', 1),
 ('Sourdough Loaf', 70.00, 'Tangy and chewy sourdough bread.', 1),

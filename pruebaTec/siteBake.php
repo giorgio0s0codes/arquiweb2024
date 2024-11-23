@@ -136,17 +136,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         }
 
         .form-group input[type="text"] {
-            margin-bottom: 10px; /* Adds space below the text input */
-            display: block; /* Ensures inputs are stacked vertically */
-            width: 80%; /* Adjust the width as needed */
-            margin-left: auto; /* Center align */
-            margin-right: auto; /* Center align */
+            margin-bottom: 10px; 
+            display: block; 
+            width: 80%; 
+            margin-left: auto; 
+            margin-right: auto; 
         }
 
         .form-group input[type="submit"] {
-            display: block; /* Ensures the button is below the text input */
-            margin-left: auto; /* Center align */
-            margin-right: auto; /* Center align */
+            display: block; 
+            margin-left: auto;
+            margin-right: auto; 
         }
 
     </style>
@@ -156,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         <h2>Product Registry</h2>
 
         <!-- Product Registration Form -->
+        <!-- Sends info from form to registerNewProduct.php -->
         <div class="col-md-6" style="margin:0 auto; float:none;">
             <form method="POST" action="./CRUD/registerNewProduct.php">
                 <h3>Register a New Product</h3>
@@ -188,6 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         </div>
 
         <!-- Search Bar -->
+        <!-- This form connects to the searchByName.php and passes the name of the product throug POST-->
         <form method="POST" class="form-group">
             <input type="text" name="search" placeholder="Search for a product by name" required />
             <input type="submit" value="Search" />
@@ -195,6 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
 
 
         <!-- Search Result -->
+        <!-- Displays the info recovered from the search -->
         <?php if ($searchResult): ?>
             <h3>Search Result</h3>
             <table>
@@ -234,10 +237,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                     <td><?= htmlspecialchars($product['descripcion']) ?></td>
                     <td><?= htmlspecialchars($product['id_categoria']) ?></td>
                     <td>
+                        <!-- Edit Button -->
+                        <!-- Takes you to editProduct.php in order to load new info into the DB -->
                         <form method="GET" action="./CRUD/editProduct.php" style="display: inline;">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
                             <button type="submit" class="edit-button">Edit</button>
                         </form>
+                        <!-- Delete Button -->
+                        <!-- Sends the id of the article in order for deleteProduct to look for it and erase it also connects to a warning -->
                         <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
                             <button type="submit" class="delete-button">Delete</button>
@@ -249,6 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     </div>
 
     <script>
+        // Warning for Delete
         function confirmDelete(event, form) {
             event.preventDefault(); // Prevent the form from submitting immediately
             if (confirm('Are you sure you want to delete this product?')) {
