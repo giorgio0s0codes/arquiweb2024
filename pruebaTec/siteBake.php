@@ -134,6 +134,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         .delete-button:hover {
             background-color: #c82333;
         }
+
+        .form-group input[type="text"] {
+            margin-bottom: 10px; /* Adds space below the text input */
+            display: block; /* Ensures inputs are stacked vertically */
+            width: 80%; /* Adjust the width as needed */
+            margin-left: auto; /* Center align */
+            margin-right: auto; /* Center align */
+        }
+
+        .form-group input[type="submit"] {
+            display: block; /* Ensures the button is below the text input */
+            margin-left: auto; /* Center align */
+            margin-right: auto; /* Center align */
+        }
+
     </style>
 </head>
 <body>
@@ -166,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                         <option value="5">Drinks</option>
                     </select>
                 </div>
-                <div class="form-group" align="center">
+                <div class="form-group" align="center" >
                     <input type="submit" value="Submit" />
                 </div>
             </form>
@@ -177,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
             <input type="text" name="search" placeholder="Search for a product by name" required />
             <input type="submit" value="Search" />
         </form>
+
 
         <!-- Search Result -->
         <?php if ($searchResult): ?>
@@ -218,6 +234,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                     <td><?= htmlspecialchars($product['descripcion']) ?></td>
                     <td><?= htmlspecialchars($product['id_categoria']) ?></td>
                     <td>
+                        <form method="GET" action="./CRUD/editProduct.php" style="display: inline;">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                            <button type="submit" class="edit-button">Edit</button>
+                        </form>
                         <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
                             <button type="submit" class="delete-button">Delete</button>
