@@ -1,3 +1,32 @@
+<?php
+// URL to the API endpoint
+$apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/pruebaTec/CRUD/readAll.php';
+$products = [];
+
+try {
+    // Fetch data from the API
+    $response = file_get_contents($apiUrl);
+
+    // Check if the response is false
+    if ($response === false) {
+        throw new Exception('Failed to fetch data from the API.');
+    }
+
+    // Decode the JSON response into a PHP array
+    $products = json_decode($response, true);
+
+    // Check if decoding was successful
+    if ($products === null) {
+        throw new Exception('Failed to decode JSON.');
+    }
+} catch (Exception $e) {
+    echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,6 +147,40 @@
                 </div>
             </form>
         </div>
+
+        <!-- Product List Table -->
+        <h3>Product List</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+            <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($product['id_articulo']) ?></td>
+                        <td><?= htmlspecialchars($product['name']) ?></td>
+                        <td><?= htmlspecialchars($product['precio']) ?></td>
+                        <td><?= htmlspecialchars($product['descripcion']) ?></td>
+                        <td><?= htmlspecialchars($product['id_categoria']) ?></td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="./CRUD/editProduct.php?id=<?= urlencode($product['id_articulo']) ?>" class="edit-button">Edit</a>
+                                <a href="./CRUD/deleteProduct.php?id=<?= urlencode($product['id_articulo']) ?>" class="delete-button">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6" style="text-align: center;">No products found</td>
+                </tr>
+            <?php endif; ?>
+        </table>
     </div>
 </body>
 </html>
