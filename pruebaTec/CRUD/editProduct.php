@@ -4,6 +4,8 @@ require '../config/configBakeDB.php'; // Include the database connection
 // Get the ID from the query string
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
+// $_GET ["id_articulo"]  This would be better without accessing the body of the HTML.
+
 if (!$id) {
     echo "<p>Invalid or missing product ID</p>";
     exit();
@@ -13,7 +15,7 @@ $product = null;
 
 // Fetch the product details
 try {
-    $stmt = $CNX->prepare("SELECT * FROM articulos WHERE id_articulo = ?");
+    $stmt = $CNX->prepare("SELECT * FROM articulos WHERE id_articulo = ?"); // Nunca usar select *, por seguridad.
     $stmt->execute([$id]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
