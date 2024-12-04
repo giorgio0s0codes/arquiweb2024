@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
         // Unsuccessful login - display an error message
-        header("Location: login2.php");
+        header("Location: login.php");
     }
 } else {
     // Redirect back if accessed directly (optional)
-    header("Location: login2.php");
+    header("Location: login.php");
     exit();
 }
 ?>

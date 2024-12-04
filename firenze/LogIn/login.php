@@ -10,7 +10,7 @@
     </head>
 
     <body class="bg-info d-flex justify-content-center align-items-center vh-100 ">
-        <form method="POST" action="loginCNT2.php">
+        <form method="POST" action="loginCNT.php">
             <div class="bg-white p-5 rounded-5" style="width: 25rem">
                 <div class="text-center fs-1">Login</div>
                 <div class="form-group mt-3">
