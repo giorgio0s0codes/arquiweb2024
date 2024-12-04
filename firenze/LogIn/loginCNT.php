@@ -5,6 +5,7 @@ require '../config/configDB.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    session_start();
 
     $username = $_POST['usuario'];
     $password = $_POST['password']; 
@@ -16,20 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userExists = $checkStmt->fetchColumn() > 0;
     
         if ($userExists) {
-            session_start();
             $_SESSION["log"] = true;
             $_SESSION["usuario"] = $username;
             $_SESSION["correo"] = "{$username}@firenzepasticceria.com";
 
             header("Location: adminTemplate3.php");
         } else {
+            $_SESSION['error'] = '***Usuario o contraseña incorrectos.***';
             header("Location: login.php");
         }
 
         exit();
 
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Error al verificar el usuario', 'details' => $e->getMessage()]);
+        $_SESSION['error'] = 'Error al verificar el usuario.';
         exit();
     }
 

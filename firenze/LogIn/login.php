@@ -10,9 +10,19 @@
     </head>
 
     <body class="d-flex justify-content-center align-items-center vh-100" style="background-color: #FFC0CB;">
+        <?php
+        session_start();
+        $error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+        unset($_SESSION['error']); // Clear the error after displaying it
+        ?>
         <form method="POST" action="loginCNT.php">
             <div class="bg-white p-5 rounded-5" style="width: 25rem">
                 <div class="text-center fs-1">Login</div>
+                <?php if ($error): ?>
+                    <div class="alert text-center mt-3" style="background-color: darkred; color: white;">
+                        <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="form-group mt-3">
                     <input class="form-control" type="text" id="usuario" name="usuario" placeholder="username">
                 </div>
@@ -20,7 +30,8 @@
                     <input class="form-control" type="password" id="password" name="password" placeholder="password">
                 </div>
                 <div>
-                    <input class="btn btn-info text-white mt-4 w-100 form-group" type="submit" name="submit" value="Enter" />
+                <input class="btn text-white mt-4 w-100 form-group" type="submit" name="submit" value="Enter" 
+                        style="background-color: purple; border-color: purple;" />
                 </div>
             </div>
 
