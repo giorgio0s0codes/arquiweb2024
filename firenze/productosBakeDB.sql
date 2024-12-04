@@ -21,6 +21,14 @@ CREATE TABLE articulos (
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
+CREATE TABLE usuarios (
+    id_usuario INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(50) NOT NULL,
+    tipo INT
+);
+
+
 -- Categories are asigned using the auto increment
 INSERT INTO categorias (description) VALUES 
 ('Bread'), ('Pastries'), ('Cakes'), ('Cookies'), ('Drinks');
@@ -44,5 +52,11 @@ INSERT INTO articulos (name, precio, descripcion, id_categoria) VALUES
 ('Cappuccino', 60.00, 'Espresso with steamed milk and foam.', 5),
 ('Latte', 65.00, 'Espresso with more milk and a light foam.', 5);
 
-
+INSERT INTO usuarios (username, password, tipo) VALUES
+('admin', '1234', 1),
+('user1', 'password1', 2),
+('user2', 'password2', 2),
+('user3', 'password3', 1),
+('user4', 'password4', 2),
+('user5', 'password5', 2);
 
