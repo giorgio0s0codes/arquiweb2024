@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             header("Location: adminTemplate3.php");
         } else {
-            $_SESSION['error'] = '***Usuario o contraseña incorrectos.***';
+            $_SESSION['error'] = '***Incorrect password or username.***';
             header("Location: login.php");
         }
 
