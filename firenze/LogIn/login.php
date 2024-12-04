@@ -9,7 +9,7 @@
         crossorigin="anonymous">
     </head>
 
-    <body class="bg-info d-flex justify-content-center align-items-center vh-100 ">
+    <body class="d-flex justify-content-center align-items-center vh-100" style="background-color: #FFC0CB;">
         <form method="POST" action="loginCNT.php">
             <div class="bg-white p-5 rounded-5" style="width: 25rem">
                 <div class="text-center fs-1">Login</div>

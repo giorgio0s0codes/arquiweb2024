@@ -1,27 +1,39 @@
 <?php
+require '../config/configDB.php';
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve user input from the form
+
     $username = $_POST['usuario'];
-    $password = $_POST['password']; // Just retrieved here, you can add further validation if needed
+    $password = $_POST['password']; 
 
-    // Validate the username
-    if ($username === 'admin' && $password == '1234') {
-        // Successful login - you can redirect or show a success message
+    try {
+    
+        $checkStmt = $CNX->prepare("SELECT COUNT(*) FROM usuarios WHERE password = ? AND username = ?");
+        $checkStmt->execute([$_POST['password'],$_POST['usuario']]);
+        $userExists = $checkStmt->fetchColumn() > 0;
+    
+        if ($userExists) {
+            session_start();
+            $_SESSION["log"] = true;
+            $_SESSION["usuario"] = $username;
+            $_SESSION["correo"] = "{$username}@firenzepasticceria.com";
 
-        session_start();
-        $_SESSION["log"] = true;
-        $_SESSION["usuario"] = 'admin';
-        $_SESSION["correo"] = 'admin@firenzepasticceria.com';
+            header("Location: adminTemplate3.php");
+        } else {
+            header("Location: login.php");
+        }
 
-        header("Location: adminTemplate3.php");
+        exit();
 
-    } else {
-        // Unsuccessful login - display an error message
-        header("Location: login.php");
+    } catch (Exception $e) {
+        echo json_encode(['error' => 'Error al verificar el usuario', 'details' => $e->getMessage()]);
+        exit();
     }
+
 } else {
-    // Redirect back if accessed directly (optional)
     header("Location: login.php");
     exit();
 }
