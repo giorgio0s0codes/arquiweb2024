@@ -5,8 +5,8 @@
         header("Location: /var/www/html/www.giorgio-oso.com/firenze/LogIn/login.php");
         exit();
     }
-    $apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/firenze/CRUD/readAll.php';
-    $products = [];
+    $apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/firenze/CRUDc/readAll.php';
+    $categories = [];
     $searchResult = null;
 
     try {
@@ -17,13 +17,13 @@
             throw new Exception('Failed to fetch data from the API.');
         }
 
-        $products = json_decode($response, true);
+        $categories = json_decode($response, true);
 
-        if ($products === null) {
+        if ($categories === null) {
             throw new Exception('Failed to decode JSON.');
         }
     } catch (Exception $e) {
-        echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
+        echo "<p>Error loading categories: " . htmlspecialchars($e->getMessage()) . "</p>";
     }
 ?>
 
@@ -123,30 +123,24 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Price</th>
                                 <th>Description</th>
-                                <th>Category</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($products as $product): ?>
+                            <?php foreach ($categories as $category): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($product['id_articulo']) ?></td>
-                                    <td><?= htmlspecialchars($product['name']) ?></td>
-                                    <td><?= htmlspecialchars($product['precio']) ?></td>
-                                    <td><?= htmlspecialchars($product['descripcion']) ?></td>
-                                    <td><?= htmlspecialchars($product['id_categoria']) ?></td>
+                                    <td><?= htmlspecialchars($category['id_categoria']) ?></td>
+                                    <td><?= htmlspecialchars($category['description']) ?></td>
                                     <td>
                                         <!-- Edit Button -->
-                                        <form method="GET" action="../CRUD/editProduct.php" style="display: inline;">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                                        <form method="GET" action="../CRUD/editCategory.php" style="display: inline;">
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
                                             <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                                         </form>
                                         <!-- Delete Button -->
-                                        <form method="POST" action="../CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                                        <form method="POST" action="../CRUD/deleteCategory.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     </td>
@@ -155,6 +149,7 @@
                         </tbody>
                     </table>
                 </div>
+
         </div>
     </div>
 
