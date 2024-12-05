@@ -121,41 +121,43 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque et nisl tempus aliquam.</p>
                 </div>
                 <h3>Product List</h3>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php foreach ($products as $product): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($product['id_articulo']) ?></td>
-                            <td><?= htmlspecialchars($product['name']) ?></td>
-                            <td><?= htmlspecialchars($product['precio']) ?></td>
-                            <td><?= htmlspecialchars($product['descripcion']) ?></td>
-                            <td><?= htmlspecialchars($product['id_categoria']) ?></td>
-                            <td>
-                                <!-- Edit Button -->
-                                <!-- Takes you to editProduct.php in order to load new info into the DB -->
-                                <form method="GET" action="./CRUD/editProduct.php" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
-                                    <button type="submit" class="edit-button">Edit</button>
-                                </form>
-                                <!-- Delete Button -->
-                                <!-- Sends the id of the article in order for deleteProduct to look for it and erase it also connects to a warning -->
-                                <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
-                                    <button type="submit" class="delete-button">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($products as $product): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($product['id_articulo']) ?></td>
+                                    <td><?= htmlspecialchars($product['name']) ?></td>
+                                    <td><?= htmlspecialchars($product['precio']) ?></td>
+                                    <td><?= htmlspecialchars($product['descripcion']) ?></td>
+                                    <td><?= htmlspecialchars($product['id_categoria']) ?></td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <form method="GET" action="./CRUD/editProduct.php" style="display: inline;">
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                                            <button type="submit" class="btn btn-sm btn-primary">Edit</button>
+                                        </form>
+                                        <!-- Delete Button -->
+                                        <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
 
