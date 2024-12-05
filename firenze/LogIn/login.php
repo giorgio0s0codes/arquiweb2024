@@ -9,7 +9,7 @@
         crossorigin="anonymous">
     </head>
 
-    <body class="d-flex justify-content-center align-items-center vh-100" style="background-color: #FFC0CB;">
+    <body class="d-flex justify-content-center align-items-center vh-100 bg-dark">
         <?php
         session_start();
         $error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
@@ -17,6 +17,9 @@
         ?>
         <form method="POST" action="loginCNT.php">
             <div class="bg-white p-5 rounded-5" style="width: 25rem">
+                <div class="text-center fs-1 fw-bold" style="color: #800080; font-family: 'Georgia', serif; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); margin-bottom: 20px; letter-spacing: 2px;">
+                    Firenze Pasticceria
+                </div>
                 <div class="text-center fs-1">Login</div>
                 <?php if ($error): ?>
                     <div class="alert text-center mt-3" style="background-color: darkred; color: white;">
