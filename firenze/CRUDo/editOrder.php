@@ -1,58 +1,55 @@
 <?php
-require '../config/configDB.php'; // Include the database connection
+require '../config/configDB.php';
 
-// Get the ID from the query string
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!$id) {
-    echo "<p>Invalid or missing category ID</p>";
+    echo "<p>Invalid or missing order ID</p>";
     exit();
 }
 
-$category = null;
+$order = null;
 
-// Fetch the category details
 try {
-    $stmt = $CNX->prepare("SELECT id_categoria, description FROM categorias WHERE id_categoria = ?");
+    $stmt = $CNX->prepare("SELECT id_order, product_name, delivery_date, status FROM orders WHERE id_order = ?");
     $stmt->execute([$id]);
-    $category = $stmt->fetch(PDO::FETCH_ASSOC);
+    $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$category) {
-        echo "<p>Category not found</p>";
+    if (!$order) {
+        echo "<p>Order not found</p>";
         exit();
     }
 } catch (Exception $e) {
-    echo "<p>Error fetching category: " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p>Error fetching order: " . htmlspecialchars($e->getMessage()) . "</p>";
     exit();
 }
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $description = trim($_POST['description']);
+    $product_name = trim($_POST['product_name']);
+    $delivery_date = trim($_POST['delivery_date']);
+    $status = trim($_POST['status']);
 
-    if ($description) {
+    if ($product_name && $delivery_date && $status) {
         try {
-            // Update the category details
-            $stmt = $CNX->prepare("UPDATE categorias SET description = ? WHERE id_categoria = ?");
-            $stmt->execute([$description, $id]);
+            $stmt = $CNX->prepare("UPDATE orders SET product_name = ?, delivery_date = ?, status = ? WHERE id_order = ?");
+            $stmt->execute([$product_name, $delivery_date, $status, $id]);
 
-            header('Location: ../templates/categories.php?message=Category+updated+successfully');
+            header('Location: ../templates/orders.php?message=Order+updated+successfully');
             exit();
         } catch (Exception $e) {
-            echo "<p>Error updating category: " . htmlspecialchars($e->getMessage()) . "</p>";
+            echo "<p>Error updating order: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     } else {
-        echo "<p>Description is required</p>";
+        echo "<p>All fields are required</p>";
     }
 }
 ?>
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Category</title>
+    <title>Edit Order</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             margin-bottom: 5px;
         }
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -96,16 +93,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <h2>Edit Category</h2>
+        <h2>Edit Order</h2>
         <form method="POST">
             <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description" value="<?= htmlspecialchars($category['description']) ?>" required />
+                <label for="product_name">Product Name</label>
+                <input type="text" id="product_name" name="product_name" value="<?= htmlspecialchars($order['product_name']) ?>" required />
             </div>
             <div class="form-group">
-                <input type="submit" value="Update Category" />
+                <label for="delivery_date">Delivery Date</label>
+                <input type="date" id="delivery_date" name="delivery_date" value="<?= htmlspecialchars($order['delivery_date']) ?>" required />
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="Not Delivered" <?= $order['status'] == 'Not Delivered' ? 'selected' : '' ?>>Not Delivered</option>
+                    <option value="Delivered" <?= $order['status'] == 'Delivered' ? 'selected' : '' ?>>Delivered</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Order" />
             </div>
         </form>
     </div>
 </body>
 </html>
+
