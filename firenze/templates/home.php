@@ -25,6 +25,19 @@
     } catch (Exception $e) {
         echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
     }
+
+    require '../config/configDB.php'; // Include database connection
+
+    $categories = [];
+
+    try {
+        // Fetch categories from the database
+        $stmt = $CNX->prepare("SELECT id_categoria, description FROM categorias");
+        $stmt->execute();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo "<p>Error fetching categories: " . htmlspecialchars($e->getMessage()) . "</p>";
+    }
 ?>
 
 
@@ -43,10 +56,20 @@
     <!-- Header -->
     <header class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Mi Admin Template</a>
+            <a class="navbar-brand" href="#">Firenze</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-sm btn-outline-light" href="../LogIn/logout.php" onclick="return confirm('Are you sure you want to log out?')">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </header>
 
@@ -109,11 +132,11 @@
                     <div class="form-group mb-4">
                         <label for="category" class="form-label">Category</label>
                         <select id="category" name="category" class="form-select" required>
-                            <option value="1">Bread</option>
-                            <option value="2">Pastries</option>
-                            <option value="3">Cakes</option>
-                            <option value="4">Cookies</option>
-                            <option value="5">Drinks</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= htmlspecialchars($category['id_categoria']) ?>">
+                                    <?= htmlspecialchars($category['description']) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     
@@ -142,7 +165,7 @@
                                     <td><?= htmlspecialchars($product['name']) ?></td>
                                     <td><?= htmlspecialchars($product['precio']) ?></td>
                                     <td><?= htmlspecialchars($product['descripcion']) ?></td>
-                                    <td><?= htmlspecialchars($product['id_categoria']) ?></td>
+                                    <td><?= htmlspecialchars($product['category_description']) ?></td>
                                     <td>
                                         <!-- Edit Button -->
                                         <form method="GET" action="../CRUD/editProduct.php" style="display: inline;">
@@ -160,6 +183,7 @@
                         </tbody>
                     </table>
                 </div>
+
         </div>
     </div>
 

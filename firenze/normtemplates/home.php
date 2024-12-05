@@ -5,8 +5,8 @@
         header("Location: /var/www/html/www.giorgio-oso.com/firenze/LogIn/login.php");
         exit();
     }
-    $apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/firenze/CRUDc/readAll.php';
-    $categories = [];
+    $apiUrl = 'http://52.15.244.98/www.giorgio-oso.com/firenze/CRUD/readAll.php';
+    $products = [];
     $searchResult = null;
 
     try {
@@ -17,13 +17,13 @@
             throw new Exception('Failed to fetch data from the API.');
         }
 
-        $categories = json_decode($response, true);
+        $products = json_decode($response, true);
 
-        if ($categories === null) {
+        if ($products === null) {
             throw new Exception('Failed to decode JSON.');
         }
     } catch (Exception $e) {
-        echo "<p>Error loading categories: " . htmlspecialchars($e->getMessage()) . "</p>";
+        echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
     }
 ?>
 
@@ -72,77 +72,37 @@
                                 Home
                             </a>
                         </li>
-                        <li class="mb-1">
-                            <a href="accounts.php" class="btn btn-toggle align-items-center rounded">
-                                Accounts
-                            </a>
-                        </li>
-                        <li class="mb-1">
-                            <a href="orders.php" class="btn btn-toggle align-items-center rounded">
-                                Orders
-                            </a>
-                        </li>
-                        <li class="mb-1">
-                            <a href="categories.php" class="btn btn-toggle align-items-center rounded">
-                                Categories
-                            </a>
-                        </li>
-                        <li class="mb-1">
-                            <a href="search.php" class="btn btn-toggle align-items-center rounded">
-                                Search
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
             
             <!-- Main Content -->
             <div class="col-md-9">
-            <form method="POST" action="../CRUDc/registerNewCategory.php" class="p-4 border rounded bg-white shadow-sm">
-                <h3 class="mb-4">Register a New Category</h3>
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Category Description</label>
-                    <input type="text" id="description" name="description" class="form-control" placeholder="Enter Category Description" required />
-                </div>
-
-                <div class="form-group text-center">
-                    <input type="submit" value="Add Category" class="btn btn-primary w-50" />
-                </div>
-            </form>
-
-                <h3>Categories List</h3>
+                <h3>Menu</h3>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
                                 <th>Description</th>
-                                <th>Actions</th>
+                                <th>Category</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($categories as $category): ?>
+                            <?php foreach ($products as $product): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($category['id_categoria']) ?></td>
-                                    <td><?= htmlspecialchars($category['description']) ?></td>
-                                    <td>
-                                        <!-- Edit Button -->
-                                        <form method="GET" action="../CRUDc/editCategory.php" style="display: inline;">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
-                                            <button type="submit" class="btn btn-sm btn-primary">Edit</button>
-                                        </form>
-                                        <!-- Delete Button -->
-                                        <form method="POST" action="../CRUDc/deleteCategory.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
-                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                    </td>
+                                    <td><?= htmlspecialchars($product['id_articulo']) ?></td>
+                                    <td><?= htmlspecialchars($product['name']) ?></td>
+                                    <td><?= htmlspecialchars($product['precio']) ?></td>
+                                    <td><?= htmlspecialchars($product['descripcion']) ?></td>
+                                    <td><?= htmlspecialchars($product['category_description']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-
         </div>
     </div>
 
