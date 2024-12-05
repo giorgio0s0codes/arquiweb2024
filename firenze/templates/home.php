@@ -77,45 +77,50 @@
                                 Categories
                             </a>
                         </li>
+                        <li class="mb-1">
+                            <a href="search.php" class="btn btn-toggle align-items-center rounded">
+                                Search
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
             
             <!-- Main Content -->
             <div class="col-md-9">
-            <form method="POST" action="../CRUD/registerNewProduct.php" class="p-4 border rounded bg-white shadow-sm">
-                <h3 class="mb-4">Register a New Product</h3>
-                
-                <div class="form-group mb-3">
-                    <label for="nombre" class="form-label">Name</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Enter Name" required />
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" required />
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <input type="text" id="description" name="description" class="form-control" placeholder="Enter Description" required />
-                </div>
-                
-                <div class="form-group mb-4">
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" name="category" class="form-select" required>
-                        <option value="1">Bread</option>
-                        <option value="2">Pastries</option>
-                        <option value="3">Cakes</option>
-                        <option value="4">Cookies</option>
-                        <option value="5">Drinks</option>
-                    </select>
-                </div>
-                
-                <div class="form-group text-center">
-                    <input type="submit" value="Submit" class="btn btn-primary w-50" />
-                </div>
-            </form>
+                <form method="POST" action="../CRUD/registerNewProduct.php" class="p-4 border rounded bg-white shadow-sm">
+                    <h3 class="mb-4">Register a New Product</h3>
+                    
+                    <div class="form-group mb-3">
+                        <label for="nombre" class="form-label">Name</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Enter Name" required />
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" required />
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" id="description" name="description" class="form-control" placeholder="Enter Description" required />
+                    </div>
+                    
+                    <div class="form-group mb-4">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" name="category" class="form-select" required>
+                            <option value="1">Bread</option>
+                            <option value="2">Pastries</option>
+                            <option value="3">Cakes</option>
+                            <option value="4">Cookies</option>
+                            <option value="5">Drinks</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group text-center">
+                        <input type="submit" value="Submit" class="btn btn-primary w-50" />
+                    </div>
+                </form>
 
                 <h3>Product List</h3>
                 <div class="table-responsive">

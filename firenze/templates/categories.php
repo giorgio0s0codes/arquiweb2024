@@ -77,6 +77,11 @@
                                 Categories
                             </a>
                         </li>
+                        <li class="mb-1">
+                            <a href="search.php" class="btn btn-toggle align-items-center rounded">
+                                Search
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
