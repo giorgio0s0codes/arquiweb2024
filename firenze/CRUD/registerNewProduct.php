@@ -1,5 +1,5 @@
 <?php
-require '../config/configBakeDB.php'; // Include database connection
+require '../config/configDB.php'; // Include database connection
 
 // Ensure the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -39,7 +39,7 @@ try {
     ]);
 
     // Redirect to siteBake.php after successful insertion
-    header('Location: ../siteBake.php');
+    header('Location: ../templates/home.php');
     exit(); // Ensure no further processing happens
 } catch (Exception $e) {
     // Handle database errors
