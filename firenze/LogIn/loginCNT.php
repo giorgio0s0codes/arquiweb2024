@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION["usuario"] = $username;
             $_SESSION["correo"] = "{$username}@firenzepasticceria.com";
 
-            header("Location: adminTemplate3.php");
+            header("Location: ../templates/home.php");
         } else {
             $_SESSION['error'] = '***Incorrect password or username.***';
             header("Location: login.php");
