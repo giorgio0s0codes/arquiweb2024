@@ -28,6 +28,20 @@ CREATE TABLE usuarios (
     tipo INT
 );
 
+CREATE TABLE orders (
+    id_order INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    delivery_date DATE NOT NULL,
+    status ENUM('Delivered', 'Not Delivered') DEFAULT 'Not Delivered'
+);
+
+INSERT INTO orders (product_name, delivery_date, status)
+VALUES 
+('Chocolate Muffin', '2024-12-23', 'Not Delivered'),
+('Vanilla Milkshake', '2024-12-24', 'Delivered'),
+('Apple Pie', '2024-12-25', 'Not Delivered'),
+('Pumpkin Bread', '2024-12-26', 'Delivered'),
+('Espresso', '2024-12-27', 'Not Delivered');
 
 -- Categories are asigned using the auto increment
 INSERT INTO categorias (description) VALUES 
