@@ -83,11 +83,40 @@
             
             <!-- Main Content -->
             <div class="col-md-9">
-                <div class="bg-white p-4 border rounded">
-                    <h2>Área de Contenido</h2>
-                    <p>Aquí va mi contenido y esta es el área donde debe aparecer:</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque et nisl tempus aliquam.</p>
+            <form method="POST" action="../CRUD/registerNewProduct.php" class="p-4 border rounded bg-white shadow-sm">
+                <h3 class="mb-4">Register a New Product</h3>
+                
+                <div class="form-group mb-3">
+                    <label for="nombre" class="form-label">Name</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Enter Name" required />
                 </div>
+                
+                <div class="form-group mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" required />
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" id="description" name="description" class="form-control" placeholder="Enter Description" required />
+                </div>
+                
+                <div class="form-group mb-4">
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" name="category" class="form-select" required>
+                        <option value="1">Bread</option>
+                        <option value="2">Pastries</option>
+                        <option value="3">Cakes</option>
+                        <option value="4">Cookies</option>
+                        <option value="5">Drinks</option>
+                    </select>
+                </div>
+                
+                <div class="form-group text-center">
+                    <input type="submit" value="Submit" class="btn btn-primary w-50" />
+                </div>
+            </form>
+
                 <h3>Product List</h3>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered">
@@ -111,12 +140,12 @@
                                     <td><?= htmlspecialchars($product['id_categoria']) ?></td>
                                     <td>
                                         <!-- Edit Button -->
-                                        <form method="GET" action="./CRUD/editProduct.php" style="display: inline;">
+                                        <form method="GET" action="../CRUD/editProduct.php" style="display: inline;">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
                                             <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                                         </form>
                                         <!-- Delete Button -->
-                                        <form method="POST" action="./CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
+                                        <form method="POST" action="../CRUD/deleteProduct.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($product['id_articulo']) ?>">
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>

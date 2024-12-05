@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $CNX->prepare("UPDATE articulos SET name = ?, precio = ?, descripcion = ?, id_categoria = ? WHERE id_articulo = ?");
             $stmt->execute([$name, $precio, $descripcion, $id_categoria, $id]);
 
-            header('Location: ../siteBake.php?message=Producto+actualizado+con+éxito');
+            header('Location: ../templates/home.php?message=Producto+actualizado+con+éxito');
             exit();
         } catch (Exception $e) {
             echo "<p>Error updating product: " . htmlspecialchars($e->getMessage()) . "</p>";
