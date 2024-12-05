@@ -83,37 +83,15 @@
             
             <!-- Main Content -->
             <div class="col-md-9">
-            <form method="POST" action="../CRUD/registerNewProduct.php" class="p-4 border rounded bg-white shadow-sm">
-                <h3 class="mb-4">Register a New Product</h3>
-                
+            <form method="POST" action="../CRUDc/registerNewCategory.php" class="p-4 border rounded bg-white shadow-sm">
+                <h3 class="mb-4">Register a New Category</h3>
                 <div class="form-group mb-3">
-                    <label for="nombre" class="form-label">Name</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Enter Name" required />
+                    <label for="description" class="form-label">Category Description</label>
+                    <input type="text" id="description" name="description" class="form-control" placeholder="Enter Category Description" required />
                 </div>
-                
-                <div class="form-group mb-3">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" required />
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <input type="text" id="description" name="description" class="form-control" placeholder="Enter Description" required />
-                </div>
-                
-                <div class="form-group mb-4">
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" name="category" class="form-select" required>
-                        <option value="1">Bread</option>
-                        <option value="2">Pastries</option>
-                        <option value="3">Cakes</option>
-                        <option value="4">Cookies</option>
-                        <option value="5">Drinks</option>
-                    </select>
-                </div>
-                
+
                 <div class="form-group text-center">
-                    <input type="submit" value="Submit" class="btn btn-primary w-50" />
+                    <input type="submit" value="Add Category" class="btn btn-primary w-50" />
                 </div>
             </form>
 
@@ -134,12 +112,12 @@
                                     <td><?= htmlspecialchars($category['description']) ?></td>
                                     <td>
                                         <!-- Edit Button -->
-                                        <form method="GET" action="../CRUD/editCategory.php" style="display: inline;">
+                                        <form method="GET" action="../CRUDc/editCategory.php" style="display: inline;">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
                                             <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                                         </form>
                                         <!-- Delete Button -->
-                                        <form method="POST" action="../CRUD/deleteCategory.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
+                                        <form method="POST" action="../CRUDc/deleteCategory.php" onsubmit="return confirmDelete(event, this);" style="display: inline;">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($category['id_categoria']) ?>">
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
